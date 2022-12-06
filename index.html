@@ -123,6 +123,7 @@
           if (event.key === "Enter") {
             const value = event.target.value;
             location_val(value);
+            input_ele.value = ''
             return false;
           }
         });
@@ -131,6 +132,7 @@
         search_button.addEventListener("click", function (event) {
           const value = input_ele.value;
           location_val(value);
+          input_ele.value = ''
         });
 
         // manage checkbox
@@ -213,7 +215,7 @@
           link.target = "_blank";
           link.click();
         }
-        document.location.href = new URL(document.location.href).origin + new URL(document.location.href).pathname
+        // document.location.href = new URL(document.location.href).origin + new URL(document.location.href).pathname
         return;
       }
     </script>
