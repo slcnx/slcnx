@@ -86,6 +86,10 @@
                 <label class="form-check-label" for="cnblogs">cnblogs</label>
               </div>
               <div class="form-check form-switch">
+                <input class="form-check-input action-checkbox" type="checkbox" id="github" value="https://github.com/search?q=" />
+                <label class="form-check-label" for="github">github</label>
+              </div>
+              <div class="form-check form-switch">
                 <input class="form-check-input action-checkbox" type="checkbox" id="google" value="https://www.google.com/search?q=" checked />
                 <label class="form-check-label" for="google">谷歌</label>
               </div>
@@ -209,6 +213,7 @@
           link.target = "_blank";
           link.click();
         }
+        document.location.href = new URL(document.location.href).origin + new URL(document.location.href).pathname
         return;
       }
     </script>
