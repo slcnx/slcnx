@@ -38,60 +38,169 @@
       }
     </style>
   </head>
-  <body >
+  <body>
     <div class="box">
-        <div class="container position-absolute start-50" style="top: 15%; transform: translateX(-50%)">
-            <div class="row col col-md-12 col-xxl-8 offset-xxl-2 justify-content-center mb-3">
-              <!--
+      <div class="container position-absolute start-50" style="top: 15%; transform: translateX(-50%)">
+        <div class="row col col-md-12 col-xxl-8 offset-xxl-2 justify-content-center mb-3">
+          <!--
                       col 最小 
                       col-md ipad
                       col-xxl 电脑
                   -->
-              <a href="http://search.mykernel.cn/" class="search-logo">
-                <h1>MageEdu</h1>
-              </a>
-            </div>
-            <div class="row col col-md-12 col-xxl-8 offset-xxl-2 justify-content-center mb-3">
-              <div class="input-group">
-                <input type="search" class="form-control" id="search" autofocus="" aria-describedby="search-button" />
-                <button class="btn btn-outline-secondary bi bi-search" type="button" id="search-button"></button>
+          <a href="http://search.mykernel.cn/" class="search-logo">
+            <h1>MageEdu</h1>
+          </a>
+        </div>
+        <div class="row col col-md-12 col-xxl-8 offset-xxl-2 justify-content-center mb-3">
+          <div class="input-group">
+            <input type="search" class="form-control" id="search" autofocus="" aria-describedby="search-button" />
+            <button class="btn btn-outline-secondary bi bi-search" type="button" id="search-button"></button>
+          </div>
+        </div>
+        <div class="col col-md-12 col-xxl-8 offset-xxl-2 row">
+        <div id="check-mgm">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="all" value="all" />
+                <label class="form-check-label" for="all">all</label>
               </div>
-            </div>
-            <div class="row col col-md-12 col-xxl-8 offset-xxl-2 justify-content-end">
-              <ul style="display: flex; flex-direction: column; align-items: end" class="list-group">
-                <li class="list-group-item">
-                  <a href="https://www.cnblogs.com/" target="_blank">博客园</a>
-                </li>
-      
-                <li class="list-group-item">
-                  <a href="https://blog.csdn.net/" target="_blank">csdn</a>
-                </li>
-              </ul>
+        </div>
+         <div id="check-content">
+            <div class="form-check form-switch">
+                <input class="form-check-input action-checkbox" type="checkbox" id="bing" value="https://cn.bing.com/search?q=" />
+                <label class="form-check-label" for="bing">bing</label>
+              </div>
+              <div class="form-check form-switch">
+                <input class="form-check-input action-checkbox" type="checkbox" id="baidu" value="https://www.baidu.com/s?wd=" />
+                <label class="form-check-label" for="baidu">baidu</label>
+              </div>
+              <div class="form-check form-switch">
+                <input class="form-check-input action-checkbox" type="checkbox" id="baidu-kaifa" value="https://kaifa.baidu.com/searchPage?wd=" />
+                <label class="form-check-label" for="baidu-kaifa">百度开发者</label>
+              </div>
+              <div class="form-check form-switch">
+                <input class="form-check-input action-checkbox" type="checkbox" id="csdn" value="https://so.csdn.net/so/search?q=" />
+                <label class="form-check-label" for="csdn">csdn</label>
+              </div>
+              <div class="form-check form-switch">
+                <input class="form-check-input action-checkbox" type="checkbox" id="cnblogs" value="https://zzk.cnblogs.com/s?w=" />
+                <label class="form-check-label" for="cnblogs">cnblogs</label>
+              </div>
+              <div class="form-check form-switch">
+                <input class="form-check-input action-checkbox" type="checkbox" id="google" value="https://www.google.com/search?q=" checked />
+                <label class="form-check-label" for="google">谷歌</label>
+              </div>
+              <div class="form-check form-switch">
+                <input class="form-check-input action-checkbox" type="checkbox" id="ocean" value="https://oceanhero.today/web?q=" checked />
+                <label class="form-check-label" for="ocean">ocean</label>
+              </div>
+         </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 提醒消息 -->
+    <div class="toast-container p-3 top-0 end-0 ">
+        <div class=" toast align-items-center text-bg-warning  border-0" role="alert"  aria-live="assertive" aria-atomic="true" id="novalue">
+            <div class="toast-body">
+                请输入搜索值
             </div>
           </div>
     </div>
+
     <script>
+      document.body.onload = function () {
+        // 当location中有search, 直接跳转
+        if (val = getquery('search')) {
+            location_val(val)
+        }
+
+        const input_ele = document.getElementById("search");
+        input_ele.addEventListener("keypress", function (event) {
+          if (event.key === "Enter") {
+            const value = event.target.value;
+            location_val(value);
+            return false;
+          }
+        });
+
+        const search_button = document.getElementById("search-button");
+        search_button.addEventListener("click", function (event) {
+          const value = input_ele.value;
+          location_val(value);
+        });
+
+        // manage checkbox
+        checkboxManage();
+      };
+
+      function checkboxManage() {
+        const options = {
+          allToggleId: "all",
+          selectedClass: "action-checkbox",
+        };
+
+        const all = document.getElementById(options.allToggleId);
+        const allinput = document.getElementsByClassName(options.selectedClass);
+
+        // 页面初始化后，将all打开
+        all.checked = false;
+        all.addEventListener("click", function () {
+          for (const input of allinput) {
+            input.checked = this.checked;
+          }
+        });
+        // 所有行选中，全选中就选中。所有行不选中。全选中就不选中。
+        for (const input of allinput) {
+          input.addEventListener("click", function (e) {
+            console.log(this.checked);
+            input.checked = this.checked;
+
+            let counter = 0;
+            for (const input of allinput) {
+              if (input.checked) {
+                counter++;
+              }
+            }
+            all.checked = counter == allinput.length;
+          });
+        }
+      }
+
       function getquery(key) {
         return new URL(document.location.href).searchParams.get(key);
       }
-      function location_val(value) {
+      function location_val(value, match_key) {
         if (!value) {
-          return;
+            new bootstrap.Toast(document.getElementById('novalue'), {}).show()
+            return
         }
 
         // 获取query查询参数
-        val = getquery("query");
+        match_key = match_key ? match_key : getquery("query");
         let searchs;
-        switch (val) {
+        switch (match_key) {
           case "baidu":
             searchs = ["https://www.baidu.com/s?wd="];
             break;
           case "google":
             searchs = ["https://www.google.com/search?q="];
+            break;
+          case "ocean":
+            searchs = ["https://oceanhero.today/web?q="];
+            break;
+          case "cnblogs":
+            searchs = ["https://zzk.cnblogs.com/s?w="];
+            break;
+          case "csdn":
+            searchs = ["https://so.csdn.net/so/search?q="];
+            break;
           default:
-            searchs = ["https://www.google.com/search?q=", "https://oceanhero.today/web?q="];
+            // 内容区的所有内容
+            const allchecked = Array.from( document.getElementById('check-content').querySelectorAll(':checked'))
+            searchs = allchecked.map(item=>item.value,allchecked)
             break;
         }
+
 
         let link;
         for (search of searchs) {
@@ -102,22 +211,6 @@
         }
         return;
       }
-
-      const element = document.getElementById("search");
-      element.addEventListener("keypress", function (event) {
-        if (event.key === "Enter") {
-          const value = event.target.value;
-          location_val(value);
-          return false;
-        }
-      });
-
-      const search_button = document.getElementById("search-button");
-      search_button.addEventListener("click", function (event) {
-        const value = element.value;
-        location_val(value);
-      });
     </script>
-
   </body>
 </html>
