@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,6 +18,7 @@
             background: url(http://myapp.image.qiniu.mykernel.cn/favicon.png) center center/ 100% no-repeat;
             width: 100px;
             height: 100px;
+            filter: drop-shadow(0 0 10px #fff);
         }
         
         .search-logo h1 {
@@ -53,7 +55,8 @@
                     <button class="btn btn-outline-secondary bi bi-search" type="button" id="search-button"></button>
                 </div>
             </div>
-            <div class="col col-md-12 col-xxl-8 offset-xxl-2 row">
+            <div class="row">
+              <div class="col-6 col-md-6 col-xxl-4 offset-xxl-2 ">
                 <div id="check-mgm">
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="all" value="all" />
@@ -90,14 +93,32 @@
                         <label class="form-check-label" for="google">谷歌</label>
                     </div>
                     <div class="form-check form-switch">
-                        <input class="form-check-input action-checkbox" type="checkbox" id="ocean" value="https://oceanhero.today/web?q=" checked />
+                        <input class="form-check-input action-checkbox" type="checkbox" id="ocean" value="https://oceanhero.today/web?q="  />
                         <label class="form-check-label" for="ocean">ocean</label>
                     </div>
                     <div class="form-check form-switch">
-                        <input class="form-check-input action-checkbox" type="checkbox" id="ecosia" value="https://www.ecosia.org/search?q=" checked />
+                        <input class="form-check-input action-checkbox" type="checkbox" id="ecosia" value="https://www.ecosia.org/search?q="  />
                         <label class="form-check-label" for="ecosia">ecosia</label>
                     </div>
                 </div>
+
+                
+            </div>
+            <div class="col-4" style="    flex-direction: row;
+            justify-content: center;
+            align-items: center;">
+            <div class="card" style="width: 12rem;">
+              <div class="card-body">
+                <h5 class="card-title pl-1" >
+                  我的书签
+                </h5>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="http://blog.mykernel.cn" target="_blank">我的博客</a></li>
+                <li class="list-group-item"><a href="http://www.mykernel.cn" target="_blank">睿哥的博客</a></li>
+                <li class="list-group-item"><a href="https://www.csdn.net/" target="_blank">csdn</a></li>
+                <li class="list-group-item"><a href="https://www.cnblogs.com/" target="_blank">博客园</a></li>
+              </ul>
             </div>
         </div>
     </div>
